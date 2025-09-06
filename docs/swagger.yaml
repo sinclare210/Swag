@@ -1,0 +1,79 @@
+basePath: /api/v1
+definitions:
+  handlers.errResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handlers.userResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      is_active:
+        type: boolean
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: olajuwonsinclair@gmail.com
+    name: Sinclare210
+    url: http://github.com/sinclare210
+  description: Sample description
+  title: Documenting API
+  version: "1"
+paths:
+  /users:
+    get:
+      description: list of all users
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.userResponse'
+      summary: return list of all users from the database
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: creates new user
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errResponse'
+      security:
+      - bearerToken: []
+      summary: creates new user
+      tags:
+      - Users
+securityDefinitions:
+  bearerToken:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
