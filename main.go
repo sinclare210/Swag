@@ -29,10 +29,18 @@ func main(){
 	v1 := r.Group("/api/v1")
 
 	user := v1.Group("/users")
+	
 	{
 		user.GET("/", handlers.GetUsers)
 		user.POST("/",handlers.GetUsers)
 	}
+
+	country := v1.Group("/country")
+
+	{
+		country.GET("/", handlers.ListCountries)
+	}
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run()
 

@@ -11,6 +11,10 @@ type userResponse struct {
 	Data []models.User `json:"data"`
 }
 
+type countryResponse struct {
+	Countries []models.Country `json:"countries"`
+}
+
 type errResponse struct {
 	Message string `json:"message"`
 }
@@ -59,4 +63,22 @@ func CreateUsers(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusCreated, create{Data: req})
+}
+
+// Get coutries of users
+// @Summary Get countries of users
+// @Description Get countries of users
+// @Tags Country
+// @Success 200 {object} countryResponse
+// @Failure 500 {object} errResponse
+// @Router /country [get]
+func ListCountries(context *gin.Context) {
+	countries, err := models.ListCountries()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, errResponse{Message: err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusOK, countryResponse{Countries: countries})
+
 }

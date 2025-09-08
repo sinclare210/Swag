@@ -1,5 +1,12 @@
 basePath: /api/v1
 definitions:
+  handlers.countryResponse:
+    properties:
+      countries:
+        items:
+          $ref: '#/definitions/models.Country'
+        type: array
+    type: object
   handlers.errResponse:
     properties:
       message:
@@ -11,6 +18,11 @@ definitions:
         items:
           $ref: '#/definitions/models.User'
         type: array
+    type: object
+  models.Country:
+    properties:
+      name:
+        type: string
     type: object
   models.User:
     properties:
@@ -33,6 +45,21 @@ info:
   title: Documenting API
   version: "1"
 paths:
+  /country:
+    get:
+      description: Get countries of users
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.countryResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errResponse'
+      summary: Get countries of users
+      tags:
+      - Country
   /users:
     get:
       description: list of all users

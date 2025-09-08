@@ -47,7 +47,7 @@ type Country struct{
 	Name string
 }
 
-var countries = []Country{
+var Countries = []Country{
 	{
 		Name: "Nigeria",
 	},
@@ -72,7 +72,7 @@ var countries = []Country{
 }
 
 func ListCountries()([]Country,error){
-	return countries,nil
+	return Countries,nil
 }
 
 
